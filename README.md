@@ -20,9 +20,9 @@ The idea is to quickly sort through a massive photo collection using vanilla php
 
 # TODO (Future)
 🛹 GPS EXIF will be resolved with an API or library to provide location names rather than GPS cordonates  
-🛹 Allow many stages of "undo" 
-🛹 Edit EXIF in form fields and have PHP save changed information
-🤕 Fix EXIF Metadata in broken images, handle errors   
+🛹 Allow many stages of "undo"  
+🛹 Edit EXIF in form fields and have PHP save changed information  
+🤕 Fix EXIF Metadata in broken images, handle errors  
 🛹 Highlight and eliminate duplicates  
 🤕 Allow multiable images to be selected at once for batch moving  
 🛹 Allow sort folder sorting, display images as list or grid  
