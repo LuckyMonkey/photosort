@@ -6,7 +6,8 @@
 // fix thumbnail function
 
 // HTML Template, styles, font, header Included.
-echo "<!doctype html>\n<html>\n<head>\n<title>PHP Image Sorter</title>\n<link rel='stylesheet' type='text/css' href='./style.css'>\n</head>\n<body>\n<br /><h1>PHP Typing Image Sorter</h1>\n";
+$appTitle = 'PHP Typing Image Sorter';
+echo "<!doctype html>\n<html>\n<head>\n<title>$appTitle</title>\n<link rel='stylesheet' type='text/css' href='./style.css'>\n</head>\n<body>\n<h1 class='bgGrey'>$appTitle</h1>\n";
 
 // This folder contains all of the images that need to be sorted
 // example = "images/";
@@ -33,6 +34,7 @@ $focusImage = substr($imagesArray[0], strlen($imagesDirectory));
 // Output the highlight image not as a thumbnail first
 echo "<img alt='$imagesDirectory$focusImage' src='$imagesDirectory$focusImage' />";
 
+echo '<br />';
 // For every item in the imagesArray use imageFile as the variable
 foreach($imagesArray as $imageFile) {
 // Get thumbnail data from each image so the app doesn't crash with thousands of images
@@ -73,7 +75,7 @@ $combined = combine_arr($kbKeys, $dirs);
 
 // Echo each key and value from combined array of keyboard shortcuts
 // Make this touchscreen friendly, horizontal scroll/swipe the buttons on bottom
-echo '<div id="kbShorts">';
+echo "<div id='kbShorts'>";
 // TODO display "Z" undo function as first key in list
 // TODO use strlngth or whatever on the fucking sort folder name and cut that off of the variable so it doesn't show the folder
 function printer($v, $k) {
@@ -82,10 +84,10 @@ function printer($v, $k) {
     // Create a link to be sent to mover.php with the Source, Name, and Target of the image.
     echo "<a href='mover.php?source=$imagesDirectory&name=$focusImage&folder=$v'><span>$k</span><br />$shortFolder</a>"; 
 };
-
 // Display each keyboard shorcut
 array_walk($combined, "printer");
-
+// Display undo key following folder names
+echo "<a href='mover.php?undo'><span>Z</span><br />undo</a>"; 
 // End the document
 echo "</div>\n</body>\n</html>";
 
