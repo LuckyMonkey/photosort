@@ -1,5 +1,5 @@
 # photosort
-![screenshot](https://github.com/LuckyMonkey/photosort/blob/master/screenshot.png)  
+![screenshot](https://github.com/LuckyMonkey/photosort/blob/master/screenshot2.png)  
 The idea is to quickly sort through a massive photo collection using vanilla php to filter metadata and use the effiency of typing to refine what cannot be filtered automatically.   
   
 # BASICS
