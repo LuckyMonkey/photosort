@@ -1,0 +1,93 @@
+<? // This function is used to determine the camera details for a specific image. It returns an array with the parameters.
+function cameraUsed($imagePath) {
+
+    // Check if the variable is set and if the file itself exists before continuing
+if ((isset($imagePath)) and (file_exists($imagePath))) {
+    $exif_ifd0 = read_exif_data($imagePath ,'IFD0' ,0);      
+    $exif_exif = read_exif_data($imagePath ,'EXIF' ,0);
+    
+    $notFound = "Unavailable Data";
+    if (@array_key_exists('Make', $exif_ifd0)) { $camMake = $exif_ifd0['Make'];} else { $camMake = $notFound; }
+     
+    if (@array_key_exists('Model', $exif_ifd0)) {$camModel = $exif_ifd0['Model'];} else { $camModel = $notFound; }
+        
+    if (@array_key_exists('DateTime', $exif_ifd0)) {$camDate = $exif_ifd0['DateTime'];} else { $camDate = $notFound; }
+         
+      $return = array();
+      $return['make'] = $camMake;
+      $return['model'] = $camModel;
+      $return['date'] = $camDate;
+      return $return;
+   
+    } else { return false; }
+}
+
+$camera = cameraUsed("/img/myphoto.jpg");
+echo "Camera Used: " . $camera['make'] . " " . $camera['model'] . "<br />";
+echo "Date Taken: " . $camera['date'] . "<br />";
+
+
+
+// determine image format
+if (exif_imagetype('image.jpg') == IMAGETYPE_JPEG) {
+    print "Hey, this is a JPEG image";
+}
+
+
+// alternate function
+
+
+// extra thumbnail from EXIF data, this sometimes help and you
+// do not need to generate your own thumbnails, most digital
+// cameras provide a thumbnail
+// $thumb_image = exif_thumbnail($original_file, $width, $height, $type);
+// print "Height: $height \nWidth: $width \nType: $type";
+// save thumbnail to a file
+// file_put_contents($path_to_thumb_image,$thumb_image);
+
+// read all available tags into an associative array
+$exif_data = exif_read_data($original_file, 'ANY_TAG');
+
+foreach ($exif_data as $key => $section_data) {
+    foreach ($section_data as $name => $val) {
+        print "$key.$name : $val \n";
+    }
+}
+
+
+
+$thePhoto = 'imagepath'
+function get_iptc_data( $thePhoto ) {
+    $return = array('title' => '', 'subject' => '', 'tags' => '');
+    $size = getimagesize ( $thePhoto, $info);
+
+    if(is_array($info)) {
+        $iptc = iptcparse($info["APP13"]);
+        var_dump($iptc); // this will show all the data retrieved but I'm only concerned with a few 
+        // $return['title'] = $iptc['2#005'][0];
+        // $return['subject'] = $iptc['2#120'][0];
+        // $return['tags'] = $iptc['2#025'];
+    }
+    return $return;
+};
+
+
+
+// If EXIF data exists within the image, create an array with it
+$exif = exif_read_data($imagesArray[0], "FILE,COMPUTED,ANY_TAG,IFD0,THUMBNAIL,COMMENT,EXIF", true);
+// var_dump_pre($exif);
+
+foreach ($exif as $key => $section) {
+    // EXIF data is separated into different types of data, FILE, COMPUTED, IDF0 and EXIF
+    if (!is_array ($section)) {
+        // Here the sections column of the array tree is hidden
+        echo "<span style='display:none'>$key</span> $section<br />\n";
+    } else {
+        foreach ($section as $name => $val) {
+            // with each EXIF metadata variable, output and give each a CSS class
+            echo "<span class='meta_$name'><span style='display:none'>$key</span> $name: $val<br /></span>\n";
+            // echo ".meta_$name, "; // uncomment this to output CSS classes of the EXIF tags in the image
+        }
+    }
+
+}
