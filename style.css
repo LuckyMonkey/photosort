@@ -2,7 +2,7 @@
 body {font-family:Tahoma;padding:92px;}
 body { background:linear-gradient(-90deg, rgba(0,0,0,.05) 1px, transparent 1px), linear-gradient(rgba(0,0,0,.05) 1px, transparent 1px), linear-gradient(-90deg, rgba(0, 0, 0, .04) 1px, transparent 1px), linear-gradient(rgba(0,0,0,.04) 1px, transparent 1px), linear-gradient(transparent 3px, #f2f2f2 3px, #f2f2f2 78px, transparent 78px), linear-gradient(-90deg, #aaa 1px, transparent 1px), linear-gradient(-90deg, transparent 3px, #f2f2f2 3px, #f2f2f2 78px, transparent 78px), linear-gradient(#aaa 1px, transparent 1px), #f2f2f2; background-size: 4px 4px, 4px 4px, 100px 100px, 100px 100px, 100px 100px, 100px 100px, 100px 100px, 100px 100px;}
 #fileCount, h1 {position:fixed;color:white;padding:10px;background-color:rgba(0,0,0,0.8);}
-#fileCount {right:100px;top:14px;} h1 {top:9px;left:100px;}
+#fileCount {right:100px;top:14px;} h1 {position:absolute;top:9px;left:100px;}
 #fileCount span {font-weight:bold;}
 #kbShorts {position:fixed;bottom:0px;}
 #kbShorts a {
@@ -20,12 +20,9 @@ body { background:linear-gradient(-90deg, rgba(0,0,0,.05) 1px, transparent 1px),
 }
 #kbShorts span {line-height:40px;font-size:30px;text-transform:uppercase;}
 #kbShorts a, #kbShorts a:link, #kbShorts a:visited, #kbShorts a:hover {color:white;text-decoration:none;}
-#exifData {font-size:10px;}
+#exifData {font-size:10px;margin-top:0;}
 #theMove {position:absolute;}
 img {border:3px solid #ddd;border-radius:4px;padding:5px;width:150px;height:150px;}
 #kbShorts a:hover {border-bottom:1px solid grey;}
 img:hover {box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);}
-img:first-of-type {border-color:red;background-color:red;width:320px;height:320px}
- .meta_FileDateTime, .meta_FileSize, .meta_FileType, .meta_MimeType, .meta_SectionsFound, .meta_html, .meta_Height, .meta_Width, .meta_IsColor, .meta_ByteOrderMotorola, .meta_ApertureFNumber, .meta_Thumbnail.FileType, .meta_Thumbnail.MimeType, .meta_Orientation, .meta_XResolution, .meta_YResolution, .meta_ResolutionUnit, .meta_YCbCrPositioning, .meta_Exif_IFD_Pointer, .meta_Compression, .meta_XResolution, .meta_YResolution, .meta_ResolutionUnit, .meta_JPEGInterchangeFormat, .meta_JPEGInterchangeFormatLength, .meta_ExposureTime, .meta_FNumber, .meta_ExposureProgram, .meta_ISOSpeedRatings, .meta_ExifVersion, .meta_DateTimeOriginal, .meta_DateTimeDigitized, .meta_ComponentsConfiguration, .meta_ShutterSpeedValue, .meta_ApertureValue, .meta_BrightnessValue, .meta_ExposureBiasValue, .meta_MaxApertureValue, .meta_MeteringMode, .meta_LightSource, .meta_Flash, .meta_FocalLength, .meta_SubSecTimeOriginal, .meta_SubSecTimeDigitized, .meta_FlashPixVersion, .meta_ColorSpace, .meta_ExifImageWidth, .meta_ExifImageLength, .meta_ExposureIndex, .meta_SensingMethod, .meta_FileSource, .meta_SceneType, .meta_CustomRendered, .meta_ExposureMode, .meta_WhiteBalance, .meta_DigitalZoomRatio, .meta_FocalLengthIn35mmFilm, .meta_SceneCaptureType, .meta_GainControl, .meta_Contrast, .meta_Saturation, .meta_Sharpness, .meta_SubjectDistanceRange, .meta_ImageUniqueID {display:none;}
-[class^="meta_UndefinedTag"], [class^="meta_Thumbnail"] {display:none;}
-.meta_FileName, .meta_Software, .meta_Make, .meta_Model, .meta_DateTime {display: inline;}
+img:first-of-type {border-color:red;background-color:red;width:320px;height:320px;float:left;margin-right:10px;}

@@ -33,14 +33,14 @@ $focusImage = substr($imagesArray[0], strlen($imagesDirectory));
 $focusImagePath = ($imagesArray[0]);
 
 // Output the highlight image not as a thumbnail first
-echo "<img alt='$imagesDirectory$focusImage' src='$imagesDirectory$focusImage' />";
-echo "<p>";
+echo "<img alt='$imagesDirectory$focusImage' src='$imagesDirectory$focusImage' />\n<p id='exifData'>";
 $exif = exif_read_data($focusImagePath, 0, true);
 foreach ($exif as $key => $section) {
     foreach ($section as $name => $val) {
         echo "$key.$name: $val<br />\n";
     }
 }
+
 echo "</p>";
 
 echo '<br />';
