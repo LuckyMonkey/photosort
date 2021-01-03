@@ -8,8 +8,6 @@
 // HTML Template, styles, font, header Included.
 echo "<!doctype html>\n<html>\n<head>\n<title>PHP Image Sorter</title>\n<link rel='stylesheet' type='text/css' href='./style.css'>\n</head>\n<body>\n<br /><h1>PHP Typing Image Sorter</h1>\n";
 
-echo "<script src='httfddjps://cdn.jsdelivr.net/npm/exif-js'></script>/";
-
 // This folder contains all of the images that need to be sorted
 // example = "images/";
 $imagesDirectory = "images/";
@@ -22,14 +20,18 @@ if ($files){ $filecount = count($files); }
 // HTML Filecount Output
 echo "<p id='fileCount'>There are <span>$filecount</span> images left to sort!</p>";
 
-// Tell us what the last moved file was // TODO:Hide the out put if cookie is not set
-//echo "<p id='theMove'>The file ".$_COOKIE['lastMoveNam']." was moved to the folder ".$_COOKIE['lastMoveTgt']."</p>";
+// Tell us what the last moved file was 
+// TODO:Hide the out put if cookie is not set
+// echo "<p id='theMove'>The file ".$_COOKIE['lastMoveNam']." was moved to the folder ".$_COOKIE['lastMoveTgt']."</p>";
 
 // Make an array out of the images inside of the imagesDirectory
 $imagesArray = glob($imagesDirectory.'*.{jpg,png}', GLOB_BRACE);
 
 // Get the first image in the imagesArray array
 $focusImage = substr($imagesArray[0], strlen($imagesDirectory));
+
+// Output the highlight image not as a thumbnail first
+echo "<img alt='$imagesDirectory$focusImage' src='$imagesDirectory$focusImage' />";
 
 // For every item in the imagesArray use imageFile as the variable
 foreach($imagesArray as $imageFile) {
