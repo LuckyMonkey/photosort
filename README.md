@@ -1,5 +1,5 @@
 # photosort
-![screenshot](https://raw.githubusercontent.com/LuckyMonkey/photosort/master/screenshot.png?token=AAXHB4A7UGGMKZBR42JXTOK76HPZG)
+![screenshot](https://raw.githubusercontent.com/LuckyMonkey/photosort/master/screenshot.png?token=AAXHB4A7UGGMKZBR42JXTOK76HPZG);
 The idea is to quickly sort through a massive photo collection using vanilla php to filter metadata and use the effiency of typing to refine what cannot be filtered automatically. 
 PHP Syntax and image metadata functions are used to define statistics on each image.
 Those Statistics can be used to help the user guide the images into a folder either automatically or by providing suggestions when unsure.
