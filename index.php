@@ -68,6 +68,7 @@ $undoKey = "z";
 // create array from folders
 $dirs = array_filter(glob($sortedDirectory.'*'), 'is_dir');
 
+
 // Compare the number of values in each array so they can be combined
 function combine_arr($a, $b)
 {
@@ -107,8 +108,14 @@ document.addEventListener('keydown', (e) => {
   let {keyCode} = e;
   if (keyCode == 90) {
      window.location.replace('mover.php?undo');
+  } else if (keyCode == 81) {
+     window.location.replace('mover.php?Q');
   }
 });
+
+
+
+
 
 document.addEventListener('keydown', (e) => {
   console.log(e)
