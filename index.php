@@ -100,21 +100,25 @@ echo "<a href='mover.php?undo'><span>Z</span><br />undo</a>";
 // Q=81 W=87 E=69 R=82 T=84 Y=89 U=85 I=73 O=79 P=80 Z=90
 
 echo "<script deffer>
-document.onkeydown = function (e) {
-    switch (e.key) {
-        case 'q':
-            document.getElementById('go2q').click();
-            break;
-        case 'w':
-            document.getElementById('go2w').click();
-            break;
-        case 'e':
-            document.getElementById('go2e').click();
-            break;
-        case 'ArrowRight':
+// document.onkeydown = function (e) {
+//     switch (e.key) {
+//         case 'q':
+//             document.getElementById('go2q').click();
+//             break;
+//         case 'w':
+//             document.getElementById('go2w').click();
+//             break;
+//         case 'e':
+//             document.getElementById('go2e').click();
+//             break;
+//         case 'ArrowRight':
             // right arrow
-    }
-};
+//     }
+// };
+
+const keys = ['q', 'w', 'e'], smoke = {};
+keys.forEach(key => smoke[key] = () => document.getElementById(`$go2{key}`).click());
+document.addEventListener("keypress", ({key}) => {if (smoke[key]) smoke[key]()});
 
 </script>
 ";
