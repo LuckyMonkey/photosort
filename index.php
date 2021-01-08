@@ -14,20 +14,17 @@ echo "<!doctype html>\n<html>\n<head>\n<title>$appTitle</title>\n<link rel='styl
 $imagesDirectory = "images/";
 $sortedDirectory = "sorted/";
 
-// Count jpg and png files in the images directory
-$filecount = 0;
-$files = glob($imagesDirectory . "*.{jpg,png}",GLOB_BRACE);
-if ($files){ $filecount = count($files); }
-
-// HTML Filecount Output
-echo "<p id='fileCount'>There are <span>$filecount</span> images left to sort!</p>";
-
 // Tell us what the last moved file was 
 // TODO:Hide the out put if cookie is not set
 // echo "<p id='theMove'>The file ".$_COOKIE['lastMoveNam']." was moved to the folder ".$_COOKIE['lastMoveTgt']."</p>";
 
 // Make an array out of the images inside of the imagesDirectory
-$imagesArray = glob($imagesDirectory.'*.{jpg,png}', GLOB_BRACE);
+$imagesArray = glob($imagesDirectory.'*.{jpg,jpeg,png}', GLOB_BRACE);
+
+$filecount = 0;
+if ($imagesArray){$filecount = count($imagesArray); }
+// HTML Filecount Output
+echo "<p id='fileCount'>There are <span>$filecount</span> images left to sort!</p>";
 
 // Get the first image in the imagesArray array
 $focusImage = substr($imagesArray[0], strlen($imagesDirectory));
@@ -92,7 +89,7 @@ function printer($v, $k) {
     global $focusImage, $sortedDirectory, $imagesDirectory;
     $shortFolder = substr($v, strlen($sortedDirectory));
     // Create a link to be sent to mover.php with the Source, Name, and Target of the image.
-    echo "<a href='mover.php?source=$imagesDirectory&name=$focusImage&folder=$v'><span>$k</span><br />$shortFolder</a>"; 
+    echo "<a id='go2$k' href='mover.php?source=$imagesDirectory&name=$focusImage&folder=$v'><span>$k</span><br />$shortFolder</a>"; 
 };
 
 // Display each keyboard shorcut
@@ -101,15 +98,35 @@ array_walk($combined, "printer");
 echo "<a href='mover.php?undo'><span>Z</span><br />undo</a>"; 
 
 // Q=81 W=87 E=69 R=82 T=84 Y=89 U=85 I=73 O=79 P=80 Z=90
+
+echo "<script deffer>
+document.onkeydown = function (e) {
+    switch (e.key) {
+        case 'q':
+            document.getElementById('go2q').click();
+            break;
+        case 'w':
+            document.getElementById('go2w').click();
+            break;
+        case 'e':
+            document.getElementById('go2e').click();
+            break;
+        case 'ArrowRight':
+            // right arrow
+    }
+};
+
+</script>
+";
+/*
 echo "
 <script deffer>
-
 document.addEventListener('keydown', (e) => {
   let {keyCode} = e;
   if (keyCode == 90) {
      window.location.replace('mover.php?undo');
   } else if (keyCode == 81) {
-     window.location.replace('mover.php?Q');
+     window.location.replace('http://localhost/photosort/mover.php?source=images/&name=bostonLG%20Image.jpg&folder=sorted/boston');
   }
 });
 
@@ -122,7 +139,7 @@ document.addEventListener('keydown', (e) => {
 });
 </script>
 ";
-
+*/
 
 // End the document
 echo "</div>\n</body>\n</html>";
