@@ -12,6 +12,7 @@ echo "<!doctype html>\n<html>\n<head>\n<title>$appTitle</title>\n<link rel='styl
 // This folder contains all of the images that need to be sorted
 // example = "images/";
 $imagesDirectory = "images/";
+$sortedDirectory = "sorted/";
 
 // Count jpg and png files in the images directory
 $filecount = 0;
@@ -65,8 +66,7 @@ $kbKeys = array("q","w","e","r","t","y","u","i","o","p","a","s","d","f","g","h",
 $undoKey = "z";
 
 // create array from folders
-$dirs = array_filter(glob('sorted/*'), 'is_dir');
-
+$dirs = array_filter(glob($sortedDirectory.'*'), 'is_dir');
 
 // Compare the number of values in each array so they can be combined
 function combine_arr($a, $b)
@@ -88,15 +88,35 @@ echo "<div id='kbShorts'>";
 // TODO display "Z" undo function as first key in list
 // TODO use strlngth or whatever on the fucking sort folder name and cut that off of the variable so it doesn't show the folder
 function printer($v, $k) {
-    global $focusImage, $imagesDirectory;
-    $shortFolder = $v;
+    global $focusImage, $sortedDirectory, $imagesDirectory;
+    $shortFolder = substr($v, strlen($sortedDirectory));
     // Create a link to be sent to mover.php with the Source, Name, and Target of the image.
     echo "<a href='mover.php?source=$imagesDirectory&name=$focusImage&folder=$v'><span>$k</span><br />$shortFolder</a>"; 
 };
+
 // Display each keyboard shorcut
 array_walk($combined, "printer");
 // Display undo key following folder names
 echo "<a href='mover.php?undo'><span>Z</span><br />undo</a>"; 
+
+// Q=81 W=87 E=69 R=82 T=84 Y=89 U=85 I=73 O=79 P=80 Z=90
+echo "
+<script deffer>
+
+document.addEventListener('keydown', (e) => {
+  let {keyCode} = e;
+  if (keyCode == 90) {
+     window.location.replace('mover.php?undo');
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  console.log(e)
+});
+</script>
+";
+
+
 // End the document
 echo "</div>\n</body>\n</html>";
 

@@ -14,11 +14,7 @@ setcookie("lastMoveSrc", $imgMoverSrc);
 setcookie("lastMoveNam", $imgMoverNam);
 setcookie("lastMoveTgt", $imgMoverTgt);
 header('Location: index.php');
-echo "<!doctype html>\n<html>\n<head>\n<title>Image Sorter</title>\n<link rel='stylesheet' type='text/css' href='./style.css'>\n<link rel='stylesheet' type='text/css' href='./profont.css'>\n</head>\n<body>\n<br /><h1>ImageSorter by Charlie</h1>\n<p id='theMove'>The file '$imgMoverSrc' was moved to the folder '$imgMoverTgt'</p> \n</body> \n</html> \n";
-
-
-
-
+echo "<!doctype html>\n<html>\n<head>\n<title>Image Sorter</title>\n<link rel='stylesheet' type='text/css' href='./style.css'>\n<link rel='stylesheet' type='text/css' href='./profont.css'>\n</head>\n<body>\n<br /><h1>ImageSorter</h1>\n<p id='theMove'>The file '$imgMoverSrc' was moved to the folder '$imgMoverTgt'</p> \n</body> \n</html> \n";
 
 //im fucking stressed out right now god damnit
 
