@@ -8,8 +8,7 @@
 $imgMoverSrc= htmlspecialchars($_GET["source"]);
 $imgMoverNam= htmlspecialchars($_GET["name"]);
 $imgMoverTgt= htmlspecialchars($_GET["folder"]);
-
-rename($imgMoverSrc . $imgMoverNam, $imgMoverTgt . $imgMoverNam);
+rename($imgMoverSrc . $imgMoverNam, $imgMoverTgt . '/' . $imgMoverNam);
 
 setcookie("lastMoveSrc", $imgMoverSrc);
 setcookie("lastMoveNam", $imgMoverNam);
