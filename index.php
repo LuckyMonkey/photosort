@@ -1,9 +1,4 @@
 <?php
-// make first image big and put metadata on left
-// add javascript keyboard capture
-// error handling for broken metadata
-// support for video files with web container
-// fix thumbnail function
 
 // HTML Template, styles, font, header Included.
 $appTitle = 'PHP Typing Image Sorter';
@@ -40,7 +35,6 @@ foreach ($exif as $key => $section) {
 }
 
 echo "</p>";
-
 echo '<br />';
 // For every item in the imagesArray use imageFile as the variable
 foreach($imagesArray as $imageFile) {
@@ -59,12 +53,10 @@ $imageThumb = exif_thumbnail($imageFile, $width, $height, $type);
 $kbKeys = array("q","w","e","r","t","y","u","i","o","p","a","s","d","f","g","h","j","k","l");
 
 // Define Z as the key for the undo function 
-// TODO create undo function with the variables of what folder and action was performed last
 $undoKey = "z";
 
 // create array from folders
 $dirs = array_filter(glob($sortedDirectory.'*'), 'is_dir');
-
 
 // Compare the number of values in each array so they can be combined
 function combine_arr($a, $b)
@@ -79,12 +71,7 @@ function combine_arr($a, $b)
 
 // Combine the two arrays so each folder is matched with a keyboard key
 $combined = combine_arr($kbKeys, $dirs);
-
-// Echo each key and value from combined array of keyboard shortcuts
-// Make this touchscreen friendly, horizontal scroll/swipe the buttons on bottom
 echo "<div id='kbShorts'>";
-// TODO display "Z" undo function as first key in list
-// TODO use strlngth or whatever on the fucking sort folder name and cut that off of the variable so it doesn't show the folder
 function printer($v, $k) {
     global $focusImage, $sortedDirectory, $imagesDirectory;
     $shortFolder = substr($v, strlen($sortedDirectory));
@@ -107,8 +94,6 @@ document.addEventListener('keypress', ({key}) => {if (smoke[key]) smoke[key]()})
 </script>
 ";
 
-
 // End the document
 echo "</div>\n</body>\n</html>";
-
 ?>
