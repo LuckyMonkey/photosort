@@ -97,54 +97,15 @@ array_walk($combined, "printer");
 // Display undo key following folder names
 echo "<a href='mover.php?undo'><span>Z</span><br />undo</a>"; 
 
-// Q=81 W=87 E=69 R=82 T=84 Y=89 U=85 I=73 O=79 P=80 Z=90
-
 echo "<script deffer>
-// document.onkeydown = function (e) {
-//     switch (e.key) {
-//         case 'q':
-//             document.getElementById('go2q').click();
-//             break;
-//         case 'w':
-//             document.getElementById('go2w').click();
-//             break;
-//         case 'e':
-//             document.getElementById('go2e').click();
-//             break;
-//         case 'ArrowRight':
-            // right arrow
-//     }
-// };
-
-const keys = ['q', 'w', 'e'], smoke = {};
-keys.forEach(key => smoke[key] = () => document.getElementById(`$go2{key}`).click());
-document.addEventListener("keypress", ({key}) => {if (smoke[key]) smoke[key]()});
+const keys = [ ";
+foreach ($kbKeys as $v) { echo "'". $v."',"; };
+echo "'z'], smoke = {};
+keys.forEach(key => smoke[key] = () => document.getElementById(`go2{key}`).click());
+document.addEventListener('keypress', ({key}) => {if (smoke[key]) smoke[key]()});
 
 </script>
 ";
-/*
-echo "
-<script deffer>
-document.addEventListener('keydown', (e) => {
-  let {keyCode} = e;
-  if (keyCode == 90) {
-     window.location.replace('mover.php?undo');
-  } else if (keyCode == 81) {
-     window.location.replace('http://localhost/photosort/mover.php?source=images/&name=bostonLG%20Image.jpg&folder=sorted/boston');
-  }
-});
-
-
-
-
-
-document.addEventListener('keydown', (e) => {
-  console.log(e)
-});
-</script>
-";
-*/
-
 // End the document
 echo "</div>\n</body>\n</html>";
 
