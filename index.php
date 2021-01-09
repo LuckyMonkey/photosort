@@ -98,14 +98,16 @@ array_walk($combined, "printer");
 echo "<a href='mover.php?undo'><span>Z</span><br />undo</a>"; 
 
 echo "<script deffer>
-const keys = [ ";
-foreach ($kbKeys as $v) { echo "'". $v."',"; };
-echo "'z'], smoke = {};
-keys.forEach(key => smoke[key] = () => document.getElementById(`go2{key}`).click());
+const text = '";
+foreach ($kbKeys as $v) {echo $v;};
+echo "z';
+const keys = text.split(''), smoke = {};
+keys.forEach(key => smoke[key] = () => document.getElementById(`go2\${key}`).click());
 document.addEventListener('keypress', ({key}) => {if (smoke[key]) smoke[key]()});
-
 </script>
 ";
+
+
 // End the document
 echo "</div>\n</body>\n</html>";
 
