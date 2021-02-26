@@ -14,7 +14,7 @@ $sortedDirectory = "sorted/";
 // echo "<p id='theMove'>The file ".$_COOKIE['lastMoveNam']." was moved to the folder ".$_COOKIE['lastMoveTgt']."</p>";
 
 // Make an array out of the images inside of the imagesDirectory
-$imagesArray = glob($imagesDirectory.'*.{jpg,jpeg,png}', GLOB_BRACE);
+$imagesArray = glob($imagesDirectory.'*.{jpg,JPG,jpeg,png}', GLOB_BRACE);
 
 $filecount = 0;
 if ($imagesArray){$filecount = count($imagesArray); }
