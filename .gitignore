@@ -1,1 +1,4 @@
-.DS_store
+bin/photosweep
+reports/
+*.jsonl
+duplicate-decisions.jsonl
