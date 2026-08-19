@@ -1,41 +1,53 @@
 # PhotoSort / PhotoSweep
 
-PhotoSort began as a small PHP keyboard sorter: show one image, expose its EXIF, and move it to a chosen folder with a key press. That original snapshot is preserved in [`archive/legacy-photosort/`](archive/legacy-photosort/).
+PhotoSweep is a native C photo-analysis and review toolkit descended from the original PhotoSort PHP keyboard sorter. The legacy application is preserved at [`archive/legacy-photosort/`](archive/legacy-photosort/).
 
-PhotoSweep builds on that idea for large libraries. It separates analysis from action:
+## Start here
+
+```sh
+make clean all
+make check
+bin/photosweep run all /path/to/photo-library /tmp/photosweep-demo/reports
+bin/photosweep chooser /tmp/photosweep-demo/reports/swatch.jsonl
+```
+
+Open the printed localhost URL to review the report. Analysis is read-only: it does not move files, delete duplicates, rewrite EXIF, or upload GPS data.
+
+## Documentation map
+
+| Need | Read |
+|---|---|
+| Five-minute overview | [`docs/README.md`](docs/README.md) |
+| Architecture and data flow | [`docs/architecture.md`](docs/architecture.md) |
+| OCR sweep | [`docs/sweeps/ocr.md`](docs/sweeps/ocr.md) |
+| Face sweep | [`docs/sweeps/faces.md`](docs/sweeps/faces.md) |
+| GPS/GIS sweep | [`docs/sweeps/gps.md`](docs/sweeps/gps.md) |
+| Swatch and duplicates | [`docs/sweeps/swatch.md`](docs/sweeps/swatch.md) |
+| Duplicate chooser | [`docs/duplicate-review.md`](docs/duplicate-review.md) |
+| Production demo | [`docs/production-demo.md`](docs/production-demo.md) |
+| Operations and privacy | [`docs/operations.md`](docs/operations.md) |
+| Function-by-function call path | [`docs/function-reference.md`](docs/function-reference.md) |
+| C development | [`docs/development.md`](docs/development.md) |
+| System inventory | [`docs/system-inventory.md`](docs/system-inventory.md) |
+| Rules and thresholds | [`rules/photosweep.yaml`](rules/photosweep.yaml) |
+
+## Commands
 
 ```text
-bin/photosweep        C analyzer: EXIF/date/camera classification, safe moves, hashes
-bin/photosweep run    four composable analysis passes and JSONL reports
-bin/photosweep chooser local browser review of duplicate groups
-rules/                editable classification and safety policy
+bin/photosweep run ocr    ROOT OUTDIR
+bin/photosweep run faces  ROOT OUTDIR
+bin/photosweep run gps    ROOT OUTDIR
+bin/photosweep run swatch ROOT OUTDIR
+bin/photosweep run all    ROOT OUTDIR
+bin/photosweep chooser    REPORT [PORT]
 ```
 
-## Four sweep types
+Each sweep appends one JSON object per image. Every record includes the path, byte size, and SHA-256 identity. Optional tools produce an explicit `unavailable` or `error` status instead of silently inventing results.
 
-| Sweep | Result | Default behavior |
-|---|---|---|
-| `ocr` | searchable text per image | calls Tesseract when installed; never edits originals |
-| `faces` | face presence/count | calls the configured detector when available; otherwise records `unavailable` |
-| `gps` | coordinates and optional readable location | reads GPS EXIF; no network geocoding by default |
-| `swatch` | color fingerprint and perceptual duplicate groups | groups likely duplicates for review; never deletes automatically |
+## Design promises
 
-Every pass writes appendable JSONL. The analysis binary does not move files or write metadata. Analysis reports can be inspected by the duplicate chooser:
-
-```bash
-make
- bin/photosweep run all /path/to/photos reports
-bin/photosweep chooser reports/swatch.jsonl
-```
-
-The previous organizer behavior and machine notes are preserved in [`archive/`](archive/). The active analyzer is C and uses ExifTool, SHA-256, Tesseract, the face detector, and ImageMagick when installed.
-
-## Safety rules
-
-- Original pixels and embedded EXIF are not rewritten by analysis passes.
-- Exact duplicates are identified by SHA-256; similar files are suggestions only.
-- GPS is private data: it is reported locally and never sent to a service by default.
-- Reports are line-oriented and resumable; interrupted runs can be repeated.
-- Review decisions are recorded separately from source files.
-
-See [`rules/photosweep.yaml`](rules/photosweep.yaml) for the policy and [`docs/workflow.md`](docs/workflow.md) for the operating model.
+- C is the only active implementation language.
+- Original files are inputs, never implicit outputs.
+- Exact duplicates are identified by SHA-256; similarity is a review signal.
+- GPS and face results stay local unless an operator deliberately exports them.
+- Historical machine notes and non-portable caches are documentation/archive material, not production inputs.
