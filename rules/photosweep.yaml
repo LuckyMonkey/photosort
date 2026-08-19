@@ -1,0 +1,26 @@
+# Human-readable policy consumed by operators and future adapters.
+analysis:
+  extensions: [jpg, jpeg, png, webp, gif, heic, heif, tif, tiff, bmp, avif]
+  report_format: jsonl
+  preserve_originals: true
+sweeps:
+  ocr:
+    command: tesseract
+    language: eng
+    min_width: 160
+    min_height: 80
+  faces:
+    command: face-detect
+    write_xmp: false
+    detector_version: opencv-haar-v1
+  gps:
+    read_tags: [GPSLatitude, GPSLongitude, GPSAltitude, GPSDateTime]
+    geocode: false
+  swatch:
+    color_buckets: 5
+    dhash: true
+    auto_delete: false
+deduplication:
+  exact_hash: sha256
+  similar_action: review_only
+  chooser_decisions: reports/duplicate-decisions.jsonl

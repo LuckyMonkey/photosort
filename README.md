@@ -1,34 +1,41 @@
-# photosort
-![screenshot](https://github.com/LuckyMonkey/photosort/blob/master/screenshot2.png)  
-The idea is to quickly sort through a massive photo collection using vanilla php to filter metadata and use the effiency of typing to refine what cannot be filtered automatically.   
-  
-# BASICS
-😲 PHP Syntax and EXIF functions are used to define statistics on each image.  
-  
-😲 Those Statistics can be used to help the user guide the images into a folder either automatically or by providing suggestions when unsure.  
-  
-😲 Each image in /images/ folder is to be sorted into one of the folders inside of /sorted/  
-  
-😲 Each folder in /sorted/ is listed on the page as a keyboard key to be pressed, When pressed the selected "highlighted" image is to moved into that folder, this also works as a button and be can clicked or touched.  
+# PhotoSort / PhotoSweep
 
-😲 The "z" key will be used as an "undo" function allowing the user to backup a step and correct mistakes  
-  
-😲 Images following the highlight image will be loaded as thumbnails and only so many will be displayed to the user in order to prevent the browser from crashing  
+PhotoSort began as a small PHP keyboard sorter: show one image, expose its EXIF, and move it to a chosen folder with a key press. That original snapshot is preserved in [`archive/legacy-photosort/`](archive/legacy-photosort/).
 
-😲 EXIF Metadata about the image is displayed to the right of the highlighted image to tell the user different information such as date taken, location taken, camera used, if its a screenshot or not, dimentions, file size, file name, and color statistics  
-  
+PhotoSweep builds on that idea for large libraries. It separates analysis from action:
 
-# TODO (Future)
-🛹 GPS EXIF will be resolved with an API or library to provide location names rather than GPS cordonates  
-🛹 Allow many stages of "undo"  
-🛹 Edit EXIF in form fields and have PHP save changed information  
-🤕 Fix EXIF Metadata in broken images, handle errors  
-🛹 Highlight and eliminate duplicates  
-🤕 Allow multiable images to be selected at once for batch moving  
-🛹 Allow sort folder sorting, display images as list or grid  
-🤕 Support for video files will play in tiny player  
-🛹 Gather statistics on metadata and destination folders and provide suggestions based on trends and similarities  
-🛹 Button to create new folders to be sorted into  
-🛹 Have each image output color statistics as a seed, and then compare to future images so if its a resized version of it PHP will be able to tell and say how many times its been encountered before.  
-🤕 Link to cloud services (FB, Flikr, Instagram, Youtube, Google Drive, iCloud, OneDrive)  
-🤕 Scrape cloud images and use color ID function on them to see if they're already hosted online or not  
+```text
+bin/photosweep        C analyzer: EXIF/date/camera classification, safe moves, hashes
+bin/photosweep run    four composable analysis passes and JSONL reports
+bin/photosweep chooser local browser review of duplicate groups
+rules/                editable classification and safety policy
+```
+
+## Four sweep types
+
+| Sweep | Result | Default behavior |
+|---|---|---|
+| `ocr` | searchable text per image | calls Tesseract when installed; never edits originals |
+| `faces` | face presence/count | calls the configured detector when available; otherwise records `unavailable` |
+| `gps` | coordinates and optional readable location | reads GPS EXIF; no network geocoding by default |
+| `swatch` | color fingerprint and perceptual duplicate groups | groups likely duplicates for review; never deletes automatically |
+
+Every pass writes appendable JSONL. The analysis binary does not move files or write metadata. Analysis reports can be inspected by the duplicate chooser:
+
+```bash
+make
+ bin/photosweep run all /path/to/photos reports
+bin/photosweep chooser reports/swatch.jsonl
+```
+
+The historical shell organizer is preserved under [`archive/non-c-active/`](archive/non-c-active/). The active analyzer is C and uses ExifTool, SHA-256, Tesseract, the face detector, and ImageMagick when installed.
+
+## Safety rules
+
+- Original pixels and embedded EXIF are not rewritten by analysis passes.
+- Exact duplicates are identified by SHA-256; similar files are suggestions only.
+- GPS is private data: it is reported locally and never sent to a service by default.
+- Reports are line-oriented and resumable; interrupted runs can be repeated.
+- Review decisions are recorded separately from source files.
+
+See [`rules/photosweep.yaml`](rules/photosweep.yaml) for the policy and [`docs/workflow.md`](docs/workflow.md) for the operating model.
