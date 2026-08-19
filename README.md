@@ -28,7 +28,7 @@ make
 bin/photosweep chooser reports/swatch.jsonl
 ```
 
-The historical shell organizer is preserved under [`archive/non-c-active/`](archive/non-c-active/). The active analyzer is C and uses ExifTool, SHA-256, Tesseract, the face detector, and ImageMagick when installed.
+The previous organizer behavior and machine notes are preserved in [`archive/`](archive/). The active analyzer is C and uses ExifTool, SHA-256, Tesseract, the face detector, and ImageMagick when installed.
 
 ## Safety rules
 
