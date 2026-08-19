@@ -94,8 +94,8 @@ static int serve(const char *report_path, int port) {
 int main(int argc, char **argv) {
     if (argc>=2 && !strcmp(argv[1],"chooser")) { if(argc<3){fprintf(stderr,"usage: photosweep chooser REPORT [PORT]\n");return 2;} return serve(argv[2],argc>3?atoi(argv[3]):8765); }
     if (argc<5 || strcmp(argv[1],"run")) { fprintf(stderr,"usage: photosweep run TYPE ROOT OUT\n       TYPE: ocr | faces | gps | swatch | all\n       photosweep chooser REPORT [PORT]\n"); return 2; }
-    mode=argv[2]; root=argv[3]; out=argv[4]; (void)out;
+    mode=argv[2]; root=argv[3]; out=argv[4]; (void)out; const char *requested=mode;
     mkdir(out,0755); const char *types[] = {"ocr","faces","gps","swatch"};
-    for(int i=0;i<4;i++) { if(strcmp(mode,"all") && strcmp(mode,types[i])) continue; mode=types[i]; char path[PATH_MAX]; snprintf(path,sizeof path,"%s/%s.jsonl",out,mode); report=fopen(path,"a"); if(!report){perror(path);return 1;} files=0; if(nftw(root,walker,20,FTW_PHYS)<0){perror(root);return 1;} fclose(report); printf("%s: %d records -> %s\n",mode,files,path); }
+    for(int i=0;i<4;i++) { if(strcmp(requested,"all") && strcmp(requested,types[i])) continue; mode=types[i]; char path[PATH_MAX]; snprintf(path,sizeof path,"%s/%s.jsonl",out,mode); report=fopen(path,"a"); if(!report){perror(path);return 1;} files=0; if(nftw(root,walker,20,FTW_PHYS)<0){perror(root);return 1;} fclose(report); printf("%s: %d records -> %s\n",mode,files,path); }
     return 0;
 }
