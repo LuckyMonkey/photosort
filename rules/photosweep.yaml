@@ -16,13 +16,15 @@ sweeps:
   face_identity:
     status: planned
     method: human-in-the-loop-pairwise-subject-active-learning
-    subject_types: [person, pet, other-living-subject]
+    subject_types: [person, pet, statue, other-living-subject]
     choices: [same-subject, different-subject, not-a-subject]
     chunk_images: 500
     ai_context_subjects: 50
     require_human_confirmation: true
     write_xmp: planned
-    hard_negatives: [not-a-subject, false-positive, statue, illustration, wood-knot, text-artifact]
+    hard_negatives: [not-a-subject, false-positive, illustration, wood-knot, text-artifact]
+    known_comparison_categories: [person, pet, statue]
+    statue_identity_evidence: [visual-comparison, GPS, reverse-geocoded-POI, human-confirmation]
   gps:
     read_tags: [GPSLatitude, GPSLongitude, GPSAltitude, GPSDateTime]
     geocode: false
