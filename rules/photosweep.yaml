@@ -13,6 +13,16 @@ sweeps:
     command: face-detect
     write_xmp: false
     detector_version: opencv-haar-v1
+  face_identity:
+    status: planned
+    method: human-in-the-loop-pairwise-subject-active-learning
+    subject_types: [person, pet, other-living-subject]
+    choices: [same-subject, different-subject, not-a-subject]
+    chunk_images: 500
+    ai_context_subjects: 50
+    require_human_confirmation: true
+    write_xmp: planned
+    hard_negatives: [not-a-subject, false-positive, statue, illustration, wood-knot, text-artifact]
   gps:
     read_tags: [GPSLatitude, GPSLongitude, GPSAltitude, GPSDateTime]
     geocode: false

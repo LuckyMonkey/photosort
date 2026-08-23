@@ -21,6 +21,7 @@ Open the printed localhost URL to review the report. Analysis is read-only: it d
 | Architecture and data flow | [`docs/architecture.md`](docs/architecture.md) |
 | OCR sweep | [`docs/sweeps/ocr.md`](docs/sweeps/ocr.md) |
 | Face sweep | [`docs/sweeps/faces.md`](docs/sweeps/faces.md) |
+| Planned face identity warm-up | [`docs/sweeps/face-identity.md`](docs/sweeps/face-identity.md) |
 | GPS/GIS sweep | [`docs/sweeps/gps.md`](docs/sweeps/gps.md) |
 | Swatch and duplicates | [`docs/sweeps/swatch.md`](docs/sweeps/swatch.md) |
 | Duplicate chooser | [`docs/duplicate-review.md`](docs/duplicate-review.md) |
