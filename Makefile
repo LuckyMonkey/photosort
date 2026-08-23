@@ -3,9 +3,9 @@ CFLAGS ?= -std=c11 -O2 -Wall -Wextra -Wpedantic
 
 all: bin/photosweep
 
-bin/photosweep: src/photosweep.c
+bin/photosweep: src/photosweep.c src/raster_classifier.c src/raster_classifier.h
 	mkdir -p bin
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) -o $@ src/photosweep.c src/raster_classifier.c -lm
 
 check: bin/photosweep
 	@test "$$(./bin/photosweep 2>&1 | head -1)" = "usage: photosweep run TYPE ROOT OUT"

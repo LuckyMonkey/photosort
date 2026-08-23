@@ -1,0 +1,13 @@
+locations:
+  root: LOCATIONS
+  source: GPS-resolved EXIF/GIS report
+  mode: symlink-view
+  preserve_originals: true
+  state_folder: state name, fallback state code, then Unknown
+  icons:
+    format: SVG
+    fill: '#2e9f45'
+    source: operator-supplied state boundary vectors
+    per_folder: '.state.svg'
+  unresolved: LOCATIONS/Unknown
+  privacy: local-only

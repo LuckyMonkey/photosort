@@ -22,6 +22,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include "raster_classifier.h"
 
 static const char *g_root;
 static const char *g_output;
@@ -169,6 +170,12 @@ static void sweep_file(const char *path)
         ++g_files;
         return;
     }
+    if (!strcmp(g_mode, "raster")) {
+        if (photosort_raster_classify_file(path, g_report) != 0) fputs(",\"raster_status\":\"error\",\"error\":\"raster decode unavailable\"}\n", g_report);
+        else { fputc('}', g_report); fputc('\n', g_report); }
+        ++g_files;
+        return;
+    }
     if (shell_quote(quoted_path, sizeof quoted_path, path) != 0) {
         fputs(",\"status\":\"error\",\"error\":\"path too long\"}\n", g_report);
         ++g_files;
@@ -294,7 +301,7 @@ static int serve_chooser(const char *report_path, int port)
 int main(int argc, char **argv)
 {
     const char *requested;
-    const char *types[] = {"ocr", "faces", "gps", "swatch"};
+    const char *types[] = {"ocr", "faces", "gps", "swatch", "raster"};
     struct stat root_metadata;
 
     if (argc >= 2 && !strcmp(argv[1], "chooser")) {
@@ -306,7 +313,7 @@ int main(int argc, char **argv)
     }
     if (argc < 5 || strcmp(argv[1], "run")) {
         fprintf(stderr, "usage: photosweep run TYPE ROOT OUT\n"
-                        "       TYPE: ocr | faces | gps | swatch | all\n"
+                        "       TYPE: ocr | faces | gps | swatch | raster | all\n"
                         "       photosweep chooser REPORT [PORT]\n");
         return 2;
     }

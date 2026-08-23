@@ -1,0 +1,4 @@
+# folder name|USPS code; add states as the corpus requires
+California|CA
+Massachusetts|MA
+New Hampshire|NH
