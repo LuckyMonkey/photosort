@@ -26,8 +26,10 @@ fi
 
 # geo-normalize-exif.py columns: source latitude longitude place city state state_code ...
 tab=$(printf "\t")
-tail -n +2 "$geo_tsv" | while IFS="$tab" read -r source latitude longitude place city state state_code rest; do
+# Reduce the TSV first so empty place/city fields cannot shift shell columns.
+tail -n +2 "$geo_tsv" | awk -F "\t" '{print $1 "\t" $6 "\t" $7}' | while IFS="$tab" read -r source state state_code; do
     [ -n "$source" ] || continue
+    [ -e "$source" ] || continue
     [ -n "$state" ] || state="Unknown"
     safe_state=$(printf '%s' "$state" | tr '/:' '__' | sed 's/[[:space:]]\+/ /g; s/^ *//; s/ *$//')
     [ -n "$safe_state" ] || safe_state="Unknown"

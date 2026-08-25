@@ -1,19 +1,35 @@
-# Duplicate chooser
+# Duplicate review and comparison tool 🖥️
 
-Start the dependency-free C review server with a swatch report:
+PhotoSweep produces similarity candidates; a human makes the duplicate decision. Similarity is never an automatic delete rule.
+
+## Report chooser
+
+For the dependency-free native chooser:
 
 ```sh
 bin/photosweep chooser reports/swatch.jsonl 8765
 ```
 
-Then open `http://127.0.0.1:8765/`. The server binds to loopback only. It renders the report as escaped text and accepts JSON decision posts at `/decision`; decisions are appended to `duplicate-decisions.jsonl` in the current directory.
+Open `http://127.0.0.1:8765/`. It binds to loopback only and records decisions without mutating source files. Retain the input report, decision log, tool version/Git commit, file counts, and a recoverable backup/trash path.
 
-The chooser does not resolve a decision into a file operation. An operator or a future audited cleanup tool must interpret decisions against the original report and verify hashes before any mutation.
+## Side-by-side comparison tool
 
-For a production review, retain:
+The companion `photo-compare` server loads the TSV visual-swatch report and presents two images side by side. Its normal launch is:
 
-- the input report;
-- the decision log;
-- the tool version and Git commit;
-- a before/after file count;
-- a backup or recoverable trash path if cleanup is later approved.
+```sh
+cd /path/to/photo-compare
+./photo-compare --report "/path/to/Photos/reports/visual-swatch-matches-overnight.tsv" --port 8765
+```
+
+Open `http://127.0.0.1:8765/`. It binds to loopback only. Controls:
+
+- `A` keeps left and moves right to the review quarantine.
+- `D` keeps right and moves left to the review quarantine.
+- `W` keeps both.
+- `S` skips.
+- `X` moves both to the review quarantine.
+- `Z` undoes the most recent move when recoverable.
+
+Decisions append to `swatch-review-decisions.tsv`; rejected files go to `.swatch-review-trash/` first. Do not empty that quarantine until the decision log and backups have been checked.
+
+The two choosers serve different report formats, but share the same safety principle: detection narrows the queue, and an operator approves mutation.
