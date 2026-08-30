@@ -1,6 +1,5 @@
-# PhotoSort / PhotoSweep 📸
-
 ![PhotoSort / PhotoSweep](photosort.png)
+# PhotoSort / PhotoSweep 📸
 
 PhotoSweep is a native C photo-analysis and review toolkit descended from the original PhotoSort PHP keyboard sorter. PhotoSort uses the companion [Csharp](https://github.com/LuckyMonkey/Csharp) repository when HEIC/HEIF files need safe JPEG derivatives; Csharp converts, PhotoSweep analyzes and reviews.
 
